@@ -18,7 +18,7 @@ setup(
       author_email='eunchan1001@gmail.com',
       license='MIT',
       install_requires=[
-        'notion>=0.0.25',
+        'notion @ git+https://github.com/jamalex/notion-py.git@refs/pull/294/merge',
         'requests>=2.22.0',
       ],
       packages=setuptools.find_packages(include=['notion2md']),
