@@ -126,6 +126,7 @@ class PageBlockExporter:
             header(Stirng): return Front Matter header
         """
         header = "---\n"
+        header += "layout: post\n"
         header += "title: {0}\n".format(self.title)
         try:
             header += "date: {0}\n".format(self._format_date())
@@ -136,6 +137,11 @@ class PageBlockExporter:
             header += "tags:\n"
             for tag in tags:
                 header += '- ' + tag + '\n'
+        
+        header += "categories: {0}\n".format(self._get_categories())
+        header += "permalink: {0}\n".format(self._get_permalink())
+        header += "author: {0}\n".format(self._get_author())
+        header += "background: {0}\n".format(self._get_background())
         header += '---\n'
         return header
 
@@ -143,7 +149,7 @@ class PageBlockExporter:
         """return tags in the page
 
           Condition:
-            "Tags" or "tags" property should exit in the page
+            "Tags" or "tags" property should exist in the page
 
           Returns:
             tags([String]): tags in "Tags or tags" property in the page
@@ -155,6 +161,70 @@ class PageBlockExporter:
             tags = []
         return tags
 
+    def _get_categories(self):
+        """return categories property in the page
+
+          Condition:
+            "Categories" or "categories" property should exist in the page
+
+          Returns:
+            categories([String]): categories in "Categories or categories" property in the page
+        """
+        try:
+            categories = self.page.get_property('categories')
+        except:
+            print("\n[Notice] '{0}' has no Categories".format(self.page.title))
+            categories = []
+        return categories
+
+    def _get_permalink(self):
+        """return permalink property in the page
+
+          Condition:
+            "Permalink" or "permalink" property should exist in the page
+
+          Returns:
+            Permalink(String): Permalink in "Permalink or permalink" property in the page
+        """
+        try:
+            permalink = self.page.get_property('permalink')
+        except:
+            print("\n[Notice] '{0}' has no Permalink".format(self.page.title))
+            permalink = None
+        return permalink
+
+    def _get_author(self):
+        """return author property in the page
+
+          Condition:
+            "Author" or "author" property should exist in the page
+
+          Returns:
+            Author(String): author in "Author or author" property in the page
+        """
+        try:
+            author = self.page.get_property('author')
+        except:
+            print("\n[Notice] '{0}' has no Author".format(self.page.title))
+            author = None
+        return author
+
+    def _get_background(self):
+        """return background image property in the page
+
+          Condition:
+            "Background" or "background" property should exist in the page
+
+          Returns:
+            Background(String): background in "background or Background" property in the page
+        """
+        try:
+            background = self.page.get_property('background')
+        except:
+            print("\n[Notice] '{0}' has no background".format(self.page.title))
+            background = None
+        return background
+
     def _format_date(self):
         """return created date in the page
 
@@ -164,8 +234,8 @@ class PageBlockExporter:
           Returns:
             formatted_date(String): formatted created date
         """
-        date = self.page.get_property("created_time")
-        formatted_date = date.strftime('%Y-%m-%d')
+        date = self.page.get_property("postar_em")
+        formatted_date = date.to_notion()[0][1][0][1]['start_date']
         return formatted_date
 
     def _set_filename(self):
