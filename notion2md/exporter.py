@@ -58,7 +58,7 @@ class PageBlockExporter:
             self.file(String): path of file
         """
         file_path = os.path.join(self.dir, self.file_name + '.md')
-        self.file = open(file_path, 'w')
+        self.file = open(file_path, 'w', encoding='utf-8')
         return file_path
 
     def write_file(self):
