@@ -303,12 +303,15 @@ class PageBlockExporter:
             self.md += icon + link_format(exporter.file_name, sub_page_path)
         if btype == 'text':
             try:
+                self.md += "{: style=\"text-align: justify\" }\n"
                 self.md += filter_inline_math(block)
             except:
                 self.md += ""
         if btype == 'bookmark':
             self.md += link_format(bt, block.link)
-        if btype == "video" or btype == "file" or btype == "audio" or btype == "pdf" or btype == "gist":
+        if btype == "file":
+            self.md += link_format("Para mais informações clique aqui.", block.source)
+        if btype == "video" or btype == "audio" or btype == "pdf" or btype == "gist":
             self.md += link_format(block.source, block.source)
         if btype == "bulleted_list" or btype == "toggle":
             self.md += '- '+filter_inline_math(block)
