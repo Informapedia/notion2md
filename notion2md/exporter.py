@@ -281,11 +281,11 @@ class PageBlockExporter:
         except:
             pass
         if btype == 'header':
-            self.md += "# " + filter_inline_math(block)
+            self.md += "# " + block.title
         if btype == "sub_header":
-            self.md += "## " + filter_inline_math(block)
+            self.md += "## " + block.title
         if btype == "sub_sub_header":
-            self.md += "### " + filter_inline_math(block)
+            self.md += "### " + block.title
         if btype == 'page':
             self.create_sub_folder()
             sub_url = block.get_browseable_url()
@@ -304,7 +304,7 @@ class PageBlockExporter:
         if btype == 'text':
             try:
                 self.md += "{: style=\"text-align: justify\" }\n"
-                self.md += filter_inline_math(block)
+                self.md += block.title
             except:
                 self.md += ""
         if btype == 'bookmark':
@@ -314,10 +314,10 @@ class PageBlockExporter:
         if btype == "video" or btype == "audio" or btype == "pdf" or btype == "gist":
             self.md += link_format(block.source, block.source)
         if btype == "bulleted_list" or btype == "toggle":
-            self.md += '- '+filter_inline_math(block)
+            self.md += '- '+ block.title
         if btype == "numbered_list":
             params['num_index'] += 1
-            self.md += str(params['num_index'])+'. '+filter_inline_math(block)
+            self.md += str(params['num_index'])+'. '+ block.title
         if btype == "code":
             self.md += "``` "+block.language.lower()+"\n"+block.title+"\n```"
         if btype == "equation":
