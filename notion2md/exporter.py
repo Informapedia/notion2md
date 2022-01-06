@@ -127,7 +127,7 @@ class PageBlockExporter:
         """
         header = "---\n"
         header += "layout: post\n"
-        header += "title: {0}\n".format(self.title)
+        header += "title: \"{0}\"\n".format(self.title)
         try:
             header += "date: {0}\n".format(self._format_date())
         except:
